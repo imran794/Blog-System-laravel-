@@ -17,8 +17,10 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::latest()->get();
-        return view('admin.tag.index',compact('tags'));
+      
+        return view('admin.tag.index',[
+            'tags' => Tag::latest()->get()
+        ]);
     }
 
     /**
@@ -72,8 +74,9 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::find($id);
-        return view('admin.tag.edit',compact('tag'));
+        return view('admin.tag.edit',[
+            'tag' => Tag::find($id)
+        ]);
     }
 
     /**

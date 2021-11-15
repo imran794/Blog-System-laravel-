@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Author\ADashboardController;
 
@@ -31,6 +32,7 @@ Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','adm
 
    Route::resource('tag', TagController::class);
    Route::resource('category', CategoryController::class);
+   Route::resource('post', PostController::class);
 });
 
 
