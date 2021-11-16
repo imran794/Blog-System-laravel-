@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Author\ADashboardController;
+use App\Http\Controllers\Author\APostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,9 +34,14 @@ Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','adm
    Route::resource('tag', TagController::class);
    Route::resource('category', CategoryController::class);
    Route::resource('post', PostController::class);
+
+   Route::get('/pending/post',[PostController::class, 'pending'])->name('post.pending');
+   Route::put('/post/{id}/approve',[PostController::class , 'approve'])->name('post.approve');
 });
 
 
 Route::group([ 'as' => 'author.','prefix' => 'author', 'middleware' => ['auth','author']], function() {
     Route::get('dashboard',[ADashboardController::class ,'index'])->name('dashboard');
+
+    Route::resource('post', APostController::class);
 });

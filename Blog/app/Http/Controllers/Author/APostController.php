@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
-use App\Models\Post;
+use App\Models\post;
 use App\Models\Category;
 use App\Models\Tag;
 use Brian2694\Toastr\Facades\Toastr;
@@ -13,7 +13,8 @@ use Carbon\carbon;
 use Image;
 use Auth;
 
-class PostController extends Controller
+
+class APostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,8 +23,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('admin.post.index',[
-            'posts' => Post::latest()->get()
+         return view('author.post.index',[
+            'posts' => Auth::user()->posts()->latest()->get()
         ]);
     }
 
@@ -34,12 +35,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create',[
+         return view('author.post.create',[
             'categories' => Category::all(),
              'tags' => Tag::all(),
         ]);
-
-
     }
 
     /**
@@ -94,7 +93,7 @@ class PostController extends Controller
         }else{
               $post->status = false;
         }
-        $post->is_approve = true;
+        $post->is_approve = false;
         $post->save();
 
         $post->categories()->attach($request->categories);
@@ -102,44 +101,61 @@ class PostController extends Controller
 
 
         Toastr::success('Post Successfully Saved :)','Success');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('author.post.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(post $post)
     {
-           return view('admin.post.show',compact('post'));
+        if ($post->user_id != Auth::id()) {
+              Toastr::error('You are not authorized to access this post','Error');
+            return redirect()->back();
+        }
+
+         return view('author.post.show',compact('post'));
+        
     }
- 
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
-    {  
+    public function edit(post $post)
+    {
+        if ($post->user_id != Auth::id())
+        {
+            Toastr::error('You are not authorized to access this post','Error');
+            return redirect()->back();
+        }
 
            $categories = Category::all();
            $tags = Tag::all();
-           return view('admin.post.edit',compact('post','categories','tags'));
-    
+           return view('author.post.edit',compact('post','categories','tags'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
-    {
+    public function update(Request $request, post $post)
+ {
+    if ($post->user_id != Auth::id())
+        {
+            Toastr::error('You are not authorized to access this post','Error');
+            return redirect()->back();
+        }
+
+
         $request->validate([
             'title'       => 'required',
             'image'       => 'image',
@@ -189,7 +205,7 @@ class PostController extends Controller
         }else{
               $post->status = false;
         }
-        $post->is_approve = true;
+        $post->is_approve = false;
         $post->save();
 
         $post->categories()->sync($request->categories);
@@ -197,44 +213,26 @@ class PostController extends Controller
 
 
         Toastr::success('Post Successfully Updated :)','Success');
-        return redirect()->route('admin.post.index');
+        return redirect()->route('author.post.index');
 
 
-    }
-
-
-    public function pending()
-    {
-        return view('admin.post.pending',[
-            'posts' => Post::where('is_approve',false)->get()
-        ]);
-        
-    }
-
-    public function approve($id)
-    {
-        
-        $post = Post::find($id);
-
-        if ($post->is_approve == false) {
-          $post->is_approve = true;
-          $post->save();
-
-        Toastr::success('Post Successfully Approved :)','Success');
-        return redirect()->route('admin.post.index');
-        }else{
-        Toastr::info('This Post is already approved','Info');
-        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Post  $post
+     * @param  \App\Models\post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy(post $post)
     {
+        if ($post->user_id != Auth::id())
+        {
+            Toastr::error('You are not authorized to access this post','Error');
+            return redirect()->back();
+        }
+
+        
         if (Storage::disk('public')->exists('post/'.$post->image)) {
             Storage::disk('public')->delete('post/'.$post->image);
         }

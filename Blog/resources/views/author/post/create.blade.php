@@ -1,6 +1,6 @@
 @extends('layouts.dashboard.app')
 
-@section('title','Update Post')
+@section('title','Post')
 
 @push('css')
 <!-- Bootstrap Select Css -->
@@ -10,10 +10,8 @@
 @section('content')
 <div class="container-fluid">
     <!-- Vertical Layout | With Floating Label -->
-    <form action="{{ route('admin.post.update',$post->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('author.post.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @method('PUT')
-
         <div class="row clearfix">
             <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
                 <div class="card">
@@ -25,7 +23,7 @@
                     <div class="body">
                         <div class="form-group form-float">
                             <div class="form-line">
-                                <input type="text" id="title" class="form-control" name="title" value="{{ $post->title }}">
+                                <input type="text" id="title" class="form-control" name="title">
                                 <label class="form-label">Post Title</label>
                             </div>
                         </div>
@@ -36,7 +34,7 @@
                         </div>
 
                         <div class="form-group">
-                            <input type="checkbox" id="publish" class="filled-in" name="status" value="1" {{ $post->status == true ? 'checked' : '' }}>
+                            <input type="checkbox" id="publish" class="filled-in" name="status" value="1">
                             <label for="publish">Publish</label>
                         </div>
 
@@ -56,12 +54,7 @@
                                 <label for="category">Select Category</label>
                                 <select name="categories[]" id="category" class="form-control show-tick" data-live-search="true" multiple>
                                     @foreach($categories as $category)
-                                    <option @foreach ($post->categories as $postcategory)
-                                        {{ $postcategory->id == $category->id ? 'selected' : ''  }}
-                                        @endforeach
-
-                                        value="{{ $category->id }}">{{ $category->name }}
-                                    </option>
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -72,19 +65,13 @@
                                 <label for="tag">Select Tags</label>
                                 <select name="tags[]" id="tag" class="form-control show-tick" data-live-search="true" multiple>
                                     @foreach($tags as $tag)
-                                    <option @foreach ($post->tags as $posttag)
-                                        {{ $posttag->id == $tag->id ? 'selected' : '' }}
-                                        @endforeach
-
-
-                                        value="{{ $tag->id }}">{{ $tag->name }}
-                                    </option>
+                                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-                        <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.post.index') }}">BACK</a>
+                        <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('author.post.index') }}">BACK</a>
                         <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
 
                     </div>
@@ -100,7 +87,7 @@
                         </h2>
                     </div>
                     <div class="body">
-                        <textarea id="tinymce" name="body">{{ $post->body }}</textarea>
+                        <textarea id="tinymce" name="body"></textarea>
                     </div>
                 </div>
             </div>
