@@ -35,11 +35,13 @@
                 <div class="footer-section">
 
                     <h4 class="title"><b>SUBSCRIBE</b></h4>
+
                     <div class="input-area">
-                      
+                        <form action="{{ route('frontend.subcribe.store') }}" method="post">
+                            @csrf
                             <input class="email-input" name="email" type="email" placeholder="Enter your email">
                             <button class="submit-btn" type="submit"><i class="icon ion-ios-email-outline"></i></button>
-                   
+                      </form>
                     </div>
 
                 </div><!-- footer-section -->

@@ -63,6 +63,12 @@
                      <span>Pending Post</span>
                  </a>
              </li>
+              <li class="{{ Request::is('admin/subcribe') ? 'active' : '' }}">
+                 <a href="{{ route('admin.subcribe.index') }}">
+                     <i class="material-icons">subscriptions</i>
+                     <span>Subcribe</span>
+                 </a>
+             </li>
              <li class="header">System</li>
              <li>
                  <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
