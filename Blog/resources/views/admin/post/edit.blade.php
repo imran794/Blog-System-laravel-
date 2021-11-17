@@ -132,8 +132,7 @@
             image_advtab: true
         });
         tinymce.suffix = ".min";
-        tinyMCE.baseURL = '{{ asset('
-        assets / dashboard / plugins / tinymce ') }}';
+        tinyMCE.baseURL = '{{ asset('assets/dashboard/plugins/tinymce') }}';
     });
 
 </script>

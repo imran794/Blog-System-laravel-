@@ -3,15 +3,19 @@
 namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
-use App\Models\post;
-use App\Models\Category;
-use App\Models\Tag;
+use Illuminate\Support\Facades\Notification;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\post;
+use App\Models\Category;
+use App\Models\Tag;
 use Carbon\carbon;
 use Image;
 use Auth;
+use App\Notifications\NewAuthorPost;
+
 
 
 class APostController extends Controller
@@ -98,7 +102,11 @@ class APostController extends Controller
 
         $post->categories()->attach($request->categories);
         $post->tags()->attach($request->tags);
+         
+         //Notification mail send
 
+         $users = User::where('role_id',1)->get();
+         Notification::send($users, new NewAuthorPost($post));
 
         Toastr::success('Post Successfully Saved :)','Success');
         return redirect()->route('author.post.index');

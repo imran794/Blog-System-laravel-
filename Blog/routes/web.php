@@ -6,9 +6,11 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SubcribeController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Author\ADashboardController;
 use App\Http\Controllers\Author\APostController;
 use App\Http\Controllers\FrontendSubcribeController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +23,15 @@ use App\Http\Controllers\FrontendSubcribeController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/',[HomeController::class, 'index'])->name('home');
+
+
+
+
 
 Route::post('/frontend/subcribe/store',[FrontendSubcribeController::class, 'store'])->name('frontend.subcribe.store');
 
@@ -34,6 +42,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','admin']], function() {
     Route::get('dashboard',[DashboardController::class ,'index'])->name('dashboard');
+
+    Route::get('setting',[SettingController::class,'index'])->name('setting');
+    Route::put('update/profile',[SettingController::class,'Update'])->name('update.profile');
 
    Route::resource('tag', TagController::class);
    Route::resource('category', CategoryController::class);

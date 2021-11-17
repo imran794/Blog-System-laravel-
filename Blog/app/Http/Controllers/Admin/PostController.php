@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Notification;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Notifications\AuthorPostAprovel;
+use App\Notifications\SubcribeNewPost;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Carbon\carbon;
+use App\Models\Subcribe;
 use Image;
 use Auth;
 
@@ -99,6 +103,15 @@ class PostController extends Controller
 
         $post->categories()->attach($request->categories);
         $post->tags()->attach($request->tags);
+
+        $subcribes = Subcribe::all();
+
+        foreach($subcribes as $subcribe){
+            Notification::route('mail',$subcribe->email)
+            ->notify(New SubcribeNewPost($post));
+
+
+        }
 
 
         Toastr::success('Post Successfully Saved :)','Success');
@@ -219,6 +232,18 @@ class PostController extends Controller
         if ($post->is_approve == false) {
           $post->is_approve = true;
           $post->save();
+
+            // notification send admin
+
+        $post->user->notify(new AuthorPostAprovel($post));
+
+         $subcribes = Subcribe::all();
+
+        foreach($subcribes as $subcribe){
+            Notification::route('mail',$subcribe->email)
+            ->notify(New SubcribeNewPost($post));
+
+        }
 
         Toastr::success('Post Successfully Approved :)','Success');
         return redirect()->route('admin.post.index');

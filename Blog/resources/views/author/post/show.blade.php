@@ -15,14 +15,14 @@
         @method('PUT')
         <a href="{{ route('author.post.index') }}" class="btn btn-danger waves-effect">BACK</a>
         @if ($post->is_approve == false)
-        <button type="button" class="btn btn-success waves-effect pull-right">
+        <button type="button" class="btn btn-danger waves-effect pull-right" disabled>
             <i class="material-icons">done</i>
-            <span>Approve</span>
+            <span>Pending</span>
         </button>
         @else
-        <button type="button" class="btn btn-success waves-effect pull-right disabled">
+        <button type="button" class="btn btn-success waves-effect pull-right" disabled>
             <i class="material-icons">done</i>
-            <span>Approve</span>
+            <span>Approved</span>
         </button>
 
         @endif
@@ -111,8 +111,7 @@
             image_advtab: true
         });
         tinymce.suffix = ".min";
-        tinyMCE.baseURL = '{{ asset('
-        assets / dashboard / plugins / tinymce ') }}';
+        tinyMCE.baseURL = '{{ asset('assets/dashboard/plugins/tinymce') }}';
     });
 
 </script>
