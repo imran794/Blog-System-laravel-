@@ -33,7 +33,7 @@
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{ asset('assets/dashboard/css/themes/all-themes.css') }}" rel="stylesheet" />
 
-     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <link href="{{ asset('assets/frontend/css/toastr.min.css') }}"  rel="stylesheet">
 
 
 @stack('css')
@@ -112,7 +112,7 @@
     <!-- Demo Js -->
     <script src="{{ asset('assets/dashboard/js/demo.js') }}"></script>
 
-        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="{{ asset('assets/frontend/js/toastr.min.js') }}"></script>
         {!! Toastr::message() !!}
 
         <script>

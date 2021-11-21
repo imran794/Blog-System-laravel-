@@ -38,6 +38,7 @@ class User extends Authenticatable
      *
      * @var array
      */
+    
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -51,5 +52,10 @@ class User extends Authenticatable
        public function posts()
        {
             return $this->hasMany('App\Models\Post');
+       }
+
+       public function favorite_posts()
+       {
+           return $this->belongsToMany('App\Models\Post');
        }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Author;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -13,15 +13,18 @@ use Image;
 use Hash;
 
 
-class SettingController extends Controller
+class AuthorSettingController extends Controller
 {
     public function index()
     {
-        return view('admin.setting.index');
+        return view('author.setting.index');
     }
 
-    public function Update(Request $request)
+
+
+    public function UpdateAuthor(Request $request)
     {
+        
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -62,6 +65,8 @@ class SettingController extends Controller
       Toastr::success('Profile Successfully Updated :)','Success');
         return redirect()->back();
     }
+
+
 
     public function ChangePassword(Request $request)
     {

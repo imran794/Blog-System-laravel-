@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Author\ADashboardController;
 use App\Http\Controllers\Author\APostController;
+use App\Http\Controllers\Author\AuthorSettingController;
 use App\Http\Controllers\FrontendSubcribeController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -39,12 +41,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::group(['middleware' => 'auth'], function() {
+    Route::post('favorite/{post}/add',[FavoriteController::class, 'Add'])->name('favorite.add');
+});
+
 
 Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','admin']], function() {
     Route::get('dashboard',[DashboardController::class ,'index'])->name('dashboard');
 
     Route::get('setting',[SettingController::class,'index'])->name('setting');
     Route::put('update/profile',[SettingController::class,'Update'])->name('update.profile');
+    Route::post('change/password',[SettingController::class,'ChangePassword'])->name('change.password');
 
    Route::resource('tag', TagController::class);
    Route::resource('category', CategoryController::class);
@@ -59,6 +66,10 @@ Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','adm
 
 Route::group([ 'as' => 'author.','prefix' => 'author', 'middleware' => ['auth','author']], function() {
     Route::get('dashboard',[ADashboardController::class ,'index'])->name('dashboard');
+
+    Route::get('setting',[AuthorSettingController::class,'index'])->name('setting');
+    Route::put('update/profile',[AuthorSettingController::class,'UpdateAuthor'])->name('update.profile');
+    Route::post('change/password',[AuthorSettingController::class,'ChangePassword'])->name('change.password');
 
     Route::resource('post', APostController::class);
 });

@@ -8,6 +8,12 @@
 
     <link href="{{ asset('assets/frontend/css/home/responsive.css') }}" rel="stylesheet">
 
+  <style>
+      .favorite_post{
+        color: blue;
+      }
+  </style>
+
 @endpush
 
 @section('content')
@@ -57,7 +63,7 @@
 
                                 <div class="blog-image"><img src="{{ asset(Storage::disk('public')->url('post/'.$post->image)) }} " alt="{{ $post->image }}"></div>
 
-                                <a class="avatar" href=""><img src="{{ asset('assets/frontend/images/audrey-jackson-260657.jpg') }}" alt="Profile Image"></a>
+                                <a class="avatar" href=""><img src="{{ asset(Storage::disk('public')->url('profile/'.$post->user->image)) }}" alt="Profile Image"></a>
 
                                 <div class="blog-info">
 
@@ -65,26 +71,27 @@
 
                                     <ul class="post-footer">
 
-                                        <li><a href="#"><i class="ion-heart"></i>57</a></li>
+                                        <li>
+                                            @guest
+                                             <a href="#" onclick="toastr.error('To Add Favorite List. You Need To Login First','Error',{ classButton: true, progressBar: true })" ><i class="ion-heart"></i>{{ $post->favorite_to_users->count() }}</a>
+                                            @else
+                                              <a href="#" onclick="document.getElementById('favorite-form-{{ $post->id }}').submit();" class="{{ !Auth::user()->favorite_posts()->where('post_id',$post->id)->count() == 0 ? 'favorite_post' : '' }}" ><i class="ion-heart"></i>{{ $post->favorite_to_users->count() }}</a>
+                                              <form id="favorite-form-{{ $post->id }}" method="post" action="{{ route('favorite.add',$post->id) }}" style="display: none;">
+                                                @csrf
+                                                  
+                                              </form>
+                                            @endguest
+                                           
+                                        </li>
                                         <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
-                                        <li>  <a href="#"><i class="ion-eye"></i>58</a></li>
+                                        <li>  <a href="#"><i class="ion-eye"></i>{{ $post->view_count }}</a></li>
                                     </ul>
 
                                 </div><!-- blog-info -->
                             </div><!-- single-post -->
                         </div><!-- card -->
                     </div><!-- col-lg-4 col-md-6 -->
-                  @endforeach
-                
-                 
-                  {{--   <div class="col-lg-12 col-md-12">
-                        <div class="card h-100">
-                            <div class="single-post post-style-1 p-2">
-                               <strong>No Post Found :(</strong>
-                            </div><!-- single-post -->
-                        </div><!-- card -->
-                    </div><!-- col-lg-4 col-md-6 --> --}}
-            
+                  @endforeach            
             </div><!-- row -->
 
             <a class="load-more-btn" href=""><b>LOAD MORE</b></a>
