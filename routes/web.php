@@ -7,8 +7,10 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SubcribeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\AdminFavoriteController;
 use App\Http\Controllers\Author\ADashboardController;
 use App\Http\Controllers\Author\APostController;
+use App\Http\Controllers\Author\AuthorFavoriteController;
 use App\Http\Controllers\Author\AuthorSettingController;
 use App\Http\Controllers\FrontendSubcribeController;
 use App\Http\Controllers\FavoriteController;
@@ -60,6 +62,8 @@ Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','adm
    Route::get('/pending/post',[PostController::class, 'pending'])->name('post.pending');
    Route::put('/post/{id}/approve',[PostController::class , 'approve'])->name('post.approve');
 
+   Route::get('favorite/post/show',[AdminFavoriteController::class,'Show'])->name('favorite.post.show');
+
    Route::resource('subcribe', SubcribeController::class);
 });
 
@@ -70,6 +74,8 @@ Route::group([ 'as' => 'author.','prefix' => 'author', 'middleware' => ['auth','
     Route::get('setting',[AuthorSettingController::class,'index'])->name('setting');
     Route::put('update/profile',[AuthorSettingController::class,'UpdateAuthor'])->name('update.profile');
     Route::post('change/password',[AuthorSettingController::class,'ChangePassword'])->name('change.password');
+
+    Route::get('favorite/post/show',[AuthorFavoriteController::class,'Show'])->name('favorite.post.show');
 
     Route::resource('post', APostController::class);
 });

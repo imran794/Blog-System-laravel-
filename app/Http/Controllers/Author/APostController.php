@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\post;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Str;
 use Carbon\carbon;
 use Image;
 use Auth;
@@ -62,7 +63,7 @@ class APostController extends Controller
         ]);
 
         $image = $request->file('image');
-        $slug  = strtolower(str_replace(' ','-',$request->title));
+        $slug = Str::lower($request->title);
 
         if (isset($image)) {
             //  make unique name for image

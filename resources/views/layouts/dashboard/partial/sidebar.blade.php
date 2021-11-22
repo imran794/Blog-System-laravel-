@@ -68,6 +68,12 @@
                      <i class="material-icons">subscriptions</i>
                      <span>Subcribe</span>
                  </a>
+             </li> 
+              <li class="{{ Request::is('admin/favorite/post/show') ? 'active' : '' }}">
+                 <a href="{{ route('admin.favorite.post.show') }}">
+                     <i class="material-icons">favorite</i>
+                     <span>Favorite Post</span>
+                 </a>
              </li>
              <li class="header">System</li>
 
@@ -110,6 +116,12 @@
                  <a href="{{ route('author.setting') }}">
                      <i class="material-icons">settings</i>
                      <span>Setting</span>
+                 </a>
+             </li>
+                  <li class="{{ Request::is('author/favorite/post/show') ? 'active' : '' }}">
+                 <a href="{{ route('author.favorite.post.show') }}">
+                     <i class="material-icons">favorite</i>
+                     <span>Favorite Post</span>
                  </a>
              </li>
              <li>

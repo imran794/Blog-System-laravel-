@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Author;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use Carbon\carbon;
@@ -13,18 +14,15 @@ use Image;
 use Hash;
 
 
-class AuthorSettingController extends Controller
+class SettingController extends Controller
 {
     public function index()
     {
-        return view('author.setting.index');
+        return view('admin.setting.index');
     }
 
-
-
-    public function UpdateAuthor(Request $request)
+    public function Update(Request $request)
     {
-        
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -32,7 +30,7 @@ class AuthorSettingController extends Controller
         ]);
 
         $image = $request->file('image');
-        $slug  = strtolower(str_replace(' ','-',$request->title));
+        $slug = Str::lower($request->name);
         $user = User::findOrFail(Auth::id());
 
         if (isset($image)) {
@@ -65,8 +63,6 @@ class AuthorSettingController extends Controller
       Toastr::success('Profile Successfully Updated :)','Success');
         return redirect()->back();
     }
-
-
 
     public function ChangePassword(Request $request)
     {

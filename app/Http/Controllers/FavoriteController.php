@@ -22,7 +22,7 @@ class FavoriteController extends Controller
         }
         else{
               $user->favorite_posts()->detach($post);
-             Toastr::error('Post Successfully Removed to your Favorite List :)','Error');
+             Toastr::success('Post Successfully Removed to your Favorite List :)','Success');
             return redirect()->back();
         }
     }

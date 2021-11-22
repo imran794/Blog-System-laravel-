@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Carbon\carbon;
 use App\Models\Subcribe;
+use Illuminate\Support\Str;
 use Image;
 use Auth;
 
@@ -63,7 +64,7 @@ class PostController extends Controller
         ]);
 
         $image = $request->file('image');
-        $slug  = strtolower(str_replace(' ','-',$request->title));
+        $slug = Str::lower($request->title);
 
         if (isset($image)) {
             //  make unique name for image

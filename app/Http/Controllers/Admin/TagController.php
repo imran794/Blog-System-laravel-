@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Tag;
 use Carbon\carbon;
@@ -47,7 +48,7 @@ class TagController extends Controller
 
         Tag::insert([
             'name'        => $request->name,
-            'slug'         => strtolower(str_replace(' ','-',$request->name)),
+            'slug'         => Str::lower($request->name),
             'created_at'  => Carbon::now()
         ]);
 

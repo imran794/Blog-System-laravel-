@@ -24,7 +24,7 @@ class HomeController extends Controller
     {
         return view('welcome',[
             'categories' => Category::latest()->get(),
-            'posts' => Post::latest()->take(6)->get(),
+            'posts' => Post::where('is_approve',true)->latest()->take(6)->get(),
         ]);
     }
 }

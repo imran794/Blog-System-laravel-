@@ -8,6 +8,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Models\Category;
 use Carbon\carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Image;
 
 
@@ -51,7 +52,7 @@ class CategoryController extends Controller
 
 
         $image = $request->file('image');
-        $slug  = strtolower(str_replace(' ','-',$request->name));
+        $slug  =  $slug = Str::lower($request->name);
          
           if (isset($image))
         {
