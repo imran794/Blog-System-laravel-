@@ -33,6 +33,8 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/',[HomeController::class, 'index'])->name('home');
 
+Route::get('post/details/{slug}',[HomeController::class, 'Details'])->name('post.details');
+Route::get('all/post',[HomeController::class, 'AllPost'])->name('all.post');
 
 
 
