@@ -63,20 +63,26 @@
                      <span>Pending Post</span>
                  </a>
              </li>
-              <li class="{{ Request::is('admin/subcribe') ? 'active' : '' }}">
-                 <a href="{{ route('admin.subcribe.index') }}">
-                     <i class="material-icons">subscriptions</i>
-                     <span>Subcribe</span>
-                 </a>
-             </li> 
               <li class="{{ Request::is('admin/favorite/post/show') ? 'active' : '' }}">
                  <a href="{{ route('admin.favorite.post.show') }}">
                      <i class="material-icons">favorite</i>
                      <span>Favorite Post</span>
                  </a>
              </li>
+              <li class="{{ Request::is('admin/comment/show') ? 'active' : '' }}">
+                 <a href="{{ route('admin.comment.show') }}">
+                     <i class="material-icons">comment</i>
+                     <span>Comment</span>
+                 </a>
+             </li>
+              <li class="{{ Request::is('admin/subcribe') ? 'active' : '' }}">
+                 <a href="{{ route('admin.subcribe.index') }}">
+                     <i class="material-icons">subscriptions</i>
+                     <span>Subcribe</span>
+                 </a>
+             </li> 
              <li class="header">System</li>
-
+              
                <li class="{{ Request::is('admin/setting') ? 'active' : '' }}">
                  <a href="{{ route('admin.setting') }}">
                      <i class="material-icons">settings</i>
@@ -109,6 +115,12 @@
                  <a href="{{ route('author.post.index') }}">
                      <i class="material-icons">library_books</i>
                      <span>Posts</span>
+                 </a>
+             </li>
+              <li class="{{ Request::is('author/comment/show') ? 'active' : '' }}">
+                 <a href="{{ route('author.comment.show') }}">
+                     <i class="material-icons">comment</i>
+                     <span>Comment</span>
                  </a>
              </li>
              <li class="header">System</li>

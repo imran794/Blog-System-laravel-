@@ -8,12 +8,15 @@ use App\Http\Controllers\Admin\SubcribeController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\AdminFavoriteController;
+use App\Http\Controllers\Admin\AdminCommentController;
 use App\Http\Controllers\Author\ADashboardController;
 use App\Http\Controllers\Author\APostController;
 use App\Http\Controllers\Author\AuthorFavoriteController;
 use App\Http\Controllers\Author\AuthorSettingController;
+use App\Http\Controllers\Author\AuthorCommentController;
 use App\Http\Controllers\FrontendSubcribeController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -47,6 +50,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => 'auth'], function() {
     Route::post('favorite/{post}/add',[FavoriteController::class, 'Add'])->name('favorite.add');
+
+    Route::post('comment/{post}',[CommentController::class, 'CommnetStroe'])->name('commnet.stroe');
 });
 
 
@@ -66,6 +71,9 @@ Route::group([ 'as' => 'admin.','prefix' => 'admin','middleware' => ['auth','adm
 
    Route::get('favorite/post/show',[AdminFavoriteController::class,'Show'])->name('favorite.post.show');
 
+   Route::get('comment/show',[AdminCommentController::class,'CommentShow'])->name('comment.show');
+   Route::delete('comment/destroy/{id}',[AdminCommentController::class,'CommentDestroy'])->name('comment.destroy');
+
    Route::resource('subcribe', SubcribeController::class);
 });
 
@@ -78,6 +86,9 @@ Route::group([ 'as' => 'author.','prefix' => 'author', 'middleware' => ['auth','
     Route::post('change/password',[AuthorSettingController::class,'ChangePassword'])->name('change.password');
 
     Route::get('favorite/post/show',[AuthorFavoriteController::class,'Show'])->name('favorite.post.show');
+
+   Route::get('comment/show',[AuthorCommentController::class,'CommentShow'])->name('comment.show');
+   Route::delete('comment/destroy/{id}',[AuthorCommentController::class,'CommentDestroy'])->name('comment.destroy');
 
     Route::resource('post', APostController::class);
 });
