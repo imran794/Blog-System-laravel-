@@ -19,9 +19,18 @@ class AuthorCommentController extends Controller
 
     public function CommentDestroy($id)
     {
-        Comment::find($id)->delete();
-        Toastr::success('Comment Successfully Published :)','Success');
-        return redirect()->back();
+        $comment =  Comment::findOrFail($id);
+     
+        if ($comment->post->user->id == Auth::id()) {
+            $comment->delete();
+              Toastr::success('Comment Successfully Published :)','Success');
+             return redirect()->back();
+        }
+        else{
+              Toastr::error('You are not authorized to delete this comment :)','Access Denied! !!');
+           return redirect()->back();
+        }
+      
     }
 
 }

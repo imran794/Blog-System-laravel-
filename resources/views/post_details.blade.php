@@ -58,7 +58,7 @@
 
                             <ul class="tags">
                                 @foreach($post->tags as $tag)
-                                    <li><a href="">{{ $tag->name }}</a></li>
+                                    <li><a href="{{ route('tag.post',$tag->slug) }}">{{ $tag->name }}</a></li>
                                 @endforeach
                             </ul>
                         </div><!-- blog-post-inner -->
@@ -77,7 +77,7 @@
                                             @endguest
 
                                 </li>
-                                <li><a href="#"><i class="ion-chatbubble"></i>85</a></li>
+                                <li><a href="#"><i class="ion-chatbubble"></i>{{ $post->comments()->count() }}</a></li>
                                 <li><a href="#"><i class="ion-eye"></i>{{ $post->view_count }}</a></li>
                             </ul>
 
@@ -107,7 +107,7 @@
                             <h4 class="title"><b>CATEGORIES</b></h4>
                             <ul>
                                    @foreach ($post->categories as $category)
-                                      <li><a href="">{{ $category->name }}</a></li> 
+                                      <li><a href="{{ route('category.post',$category->slug) }}">{{ $category->name }}</a></li> 
                                    @endforeach
                                     
                             </ul>
@@ -154,7 +154,7 @@
                                             @endguest
                                            
                                         </li>
-                                        <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
+                                        <li><a href="#"><i class="ion-chatbubble"></i>{{ $post->comments()->count() }}</a></li>
                                         <li>  <a href="#"><i class="ion-eye"></i>{{ $post->view_count }}</a></li>
                                     </ul>
 

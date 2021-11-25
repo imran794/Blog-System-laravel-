@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\Tag;
 use Session;
 
 class HomeController extends Controller
@@ -25,7 +26,7 @@ class HomeController extends Controller
     {
         return view('welcome',[
             'categories' => Category::latest()->get(),
-            'posts' => Post::where('is_approve',true)->latest()->take(6)->get(),
+            'posts' => Post::where('is_approve',true)->where('status',true)->latest()->take(7)->get(),
         ]);
     }
 
@@ -40,7 +41,7 @@ class HomeController extends Controller
             Session::put($blogkey,1);
         }
 
-        $randomposts = Post::all()->random(3);
+        $randomposts = Post::where('is_approve',true)->where('status',true)->take(3)->get();
         return view('post_details',compact('post','randomposts'));
     }
 
@@ -49,5 +50,20 @@ class HomeController extends Controller
         return view('posts',[
             'posts' => Post::latest()->paginate(3)
         ]);
+    }
+
+    public function CategoryByPost($slug)
+    {
+        $category = Category::where('slug',$slug)->first();
+        $posts = $category->posts()->where('is_approve',true)->where('status',true)->get();
+        return view('categorybypost', compact('category','posts'));
+        
+    }
+
+    public function TagByPost($slug)
+    {
+        $tag = Tag::where('slug',$slug)->first();
+        $posts = $tag->posts()->where('is_approve',true)->where('status',true)->get();
+        return view('tagbypost',compact('tag','posts'));
     }
 }
