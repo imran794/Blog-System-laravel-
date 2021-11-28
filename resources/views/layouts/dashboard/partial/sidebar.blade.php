@@ -81,6 +81,12 @@
                      <span>Subcribe</span>
                  </a>
              </li> 
+                <li class="{{ Request::is('admin/all/author') ? 'active' : '' }}">
+                 <a href="{{ route('admin.all.author') }}">
+                     <i class="material-icons">account_circle</i>
+                     <span>All Author</span>
+                 </a>
+             </li> 
              <li class="header">System</li>
               
                <li class="{{ Request::is('admin/setting') ? 'active' : '' }}">

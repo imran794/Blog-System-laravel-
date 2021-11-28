@@ -23,8 +23,11 @@
         
 
         <div class="src-area">
+            <form action="{{ route('post.search') }}" method="get">
+                <input class="src-input" name="query" value="{{ isset($query) ? $query : '' }}"  type="text" placeholder="Search">
                 <button class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
-                <input class="src-input" value="" name="query" type="text" placeholder="Search">
+                
+            </form>
         </div>
 
     </div><!-- conatiner -->

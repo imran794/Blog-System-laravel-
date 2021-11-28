@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use Session;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -65,5 +66,11 @@ class HomeController extends Controller
         $tag = Tag::where('slug',$slug)->first();
         $posts = $tag->posts()->where('is_approve',true)->where('status',true)->get();
         return view('tagbypost',compact('tag','posts'));
+    }
+
+    public function AuthorProfile($username)
+    {    
+        return   $users = User::where('username',$username)->first()->posts->where('is_approve',true)->where('status',true);
+        view('authprofile');
     }
 }

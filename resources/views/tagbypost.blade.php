@@ -1,6 +1,6 @@
 @extends('layouts.frontend.app')
 
-@section('title','Posts')
+@section('title','Tag Post')
 
 @push('css')
     <link href="{{ asset('assets/frontend/css/category/styles.css') }}" rel="stylesheet">
@@ -54,7 +54,7 @@
                                             @endguest
 
                                         </li>
-                                        <li><a href="#"><i class="ion-chatbubble"></i>12</a></li>
+                                        <li><a href="#"><i class="ion-chatbubble"></i>{{ $post->comments()->count() }}</a></li>
                                         <li><a href="#"><i class="ion-eye"></i>{{ $post->view_count }}</a></li>
                                     </ul>
 

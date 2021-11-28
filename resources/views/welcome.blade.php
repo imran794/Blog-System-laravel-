@@ -59,7 +59,7 @@
 
                                 <div class="blog-image"><img src="{{ asset(Storage::disk('public')->url('post/'.$post->image)) }} " alt="{{ $post->image }}"></div>
 
-                                <a class="avatar" href=""><img src="{{ asset(Storage::disk('public')->url('profile/'.$post->user->image)) }}" alt="Profile Image"></a>
+                                <a class="avatar" href="{{ route('author.profile',$post->user->username) }}"><img src="{{ asset(Storage::disk('public')->url('profile/'.$post->user->image)) }}" alt="Profile Image"></a>
 
                                 <div class="blog-info">
 
@@ -79,7 +79,7 @@
                                             @endguest
                                            
                                         </li>
-                                        <li><a href="#"><i class="ion-chatbubble"></i>6</a></li>
+                                        <li><a href="#"><i class="ion-chatbubble"></i>{{ $post->comments()->count() }}</a></li>
                                         <li>  <a href="#"><i class="ion-eye"></i>{{ $post->view_count }}</a></li>
                                     </ul>
 
