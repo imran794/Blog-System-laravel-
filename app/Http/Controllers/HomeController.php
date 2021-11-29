@@ -70,7 +70,8 @@ class HomeController extends Controller
 
     public function AuthorProfile($username)
     {    
-        return   $users = User::where('username',$username)->first()->posts->where('is_approve',true)->where('status',true);
-        view('authprofile');
+         $author = User::where('username',$username)->first();
+         $posts = $author->posts()->where('is_approve',true)->where('status',true)->get();
+       return view('authprofile',compact('author','posts'));
     }
 }
