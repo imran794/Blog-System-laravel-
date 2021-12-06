@@ -19,7 +19,7 @@ class ADashboardController extends Controller
       ->orderby('favorite_to_users_count')
       ->take(5)
       ->get();
-      $pending_post = $posts->where('is_approve',true)->count();
+      $pending_post = $posts->where('is_approve',false)->count();
       $all_view = $posts->sum('view_count');
         return view('author.index',compact('popular_posts','pending_post','all_view','posts'));
     }

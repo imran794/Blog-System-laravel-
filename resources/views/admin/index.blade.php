@@ -21,7 +21,7 @@
                 </div>
                 <div class="content">
                     <div class="text">TOTAL POSTS</div>
-                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $posts->count() }}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="content">
                     <div class="text">TOTAL FAVORITE</div>
-                    <div class="number count-to" data-from="0" data-to="257" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ Auth::user()->favorite_posts()->count() }}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="content">
                     <div class="text">PENDING POSTS</div>
-                    <div class="number count-to" data-from="0" data-to="243" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $total_pending_post }}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
                 </div>
                 <div class="content">
                     <div class="text">TOTAL VIEWS</div>
-                    <div class="number count-to" data-from="0" data-to="1225" data-speed="1000" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $all_views }}" data-speed="1000" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -71,7 +71,7 @@
                 </div>
                 <div class="content">
                     <div class="text">TAGS</div>
-                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $tag_count }}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
               <div class="info-box bg-purple hover-zoom-effect">
@@ -80,7 +80,7 @@
                 </div>
                 <div class="content">
                     <div class="text">CATEGORIES</div>
-                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $category_count }}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
              <div class="info-box bg-deep-purple hover-zoom-effect">
@@ -89,16 +89,16 @@
                     </div>
                 <div class="content">
                     <div class="text">TOTAL AUHTORS</div>
-                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $all_author }}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
-            <div class="info-box bg-deep-purple hover-zoom-effect">
+            <div class="info-box bg-red hover-zoom-effect">
                     <div class="icon">
                         <i class="material-icons">fiber_new</i>
                     </div>
                 <div class="content">
                     <div class="text">TODAY AUTHOR</div>
-                    <div class="number count-to" data-from="0" data-to="125" data-speed="15" data-fresh-interval="20"></div>
+                    <div class="number count-to" data-from="0" data-to="{{ $today_author }}" data-speed="15" data-fresh-interval="20"></div>
                 </div>
             </div>
         </div>
@@ -106,6 +106,10 @@
           <div class="card">
                 <div class="body">
                     <div class="table-responsive">
+                        <div class="card">
+                            <div class="header">
+                                <h2>MOST POPULAR POST</h2> 
+                            </div>
                         <table class="table table-hover dashboard-task-infos">
                             <thead>
                                 <tr>
@@ -120,22 +124,34 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Task A</td>
-                                    <td><span class="label bg-green">Doing</span></td>
-                                    <td>John Doe</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%"></div>
-                                        </div>
-                                    </td>
-                                </tr>
 
+                                @foreach ($popular_posts as $key=>$popular_post)
+                                     <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ Str::limit($popular_post->title,10) }}</td>
+                                    <td>{{ $popular_post->user->name }}</td>
+                                    <td>{{ $popular_post->view_count }}</td>
+                                    <td>{{ $popular_post->favorite_posts_count }}</td>
+                                    <td>{{ $popular_post->comments_count }}</td>
+                                    <td>
+                                        @if ($popular_post->status == true)
+                                            <span class="label bg-green">Published</span>
+                                        @else
+                                           <span class="label bg-red">Pending</span> 
+                                        @endif
+                                    </td>
+                                    <td>
+                                           <a class="btn btn-sm btn-primary waves-effect" target="_blank" href="{{ route('post.details',$popular_post->slug) }}">View</a>
+                                    </td>
+                                  
+                          
+                                </tr>
+                           @endforeach
                               
                             </tbody>
                         </table>
                     </div>
+                            </div>
                 </div>
             </div>
         </div>
@@ -154,27 +170,25 @@
                         <table class="table table-hover dashboard-task-infos">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Task</th>
-                                    <th>Status</th>
-                                    <th>Manager</th>
-                                    <th>Progress</th>
+                                    <th>Rank List</th>
+                                    <th>Name</th>
+                                    <th>Post</th>
+                                    <th>Comments</th>
+                                    <th>Favorite</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($active_author as $key=>$author)
                                 <tr>
-                                    <td>1</td>
-                                    <td>Task A</td>
-                                    <td><span class="label bg-green">Doing</span></td>
-                                    <td>John Doe</td>
-                                    <td>
-                                        <div class="progress">
-                                            <div class="progress-bar bg-green" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100" style="width: 62%"></div>
-                                        </div>
-                                    </td>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $author->name }}</td>
+                                    <td>{{ $author->posts_count }}</td>
+                                    <td>{{ $author->comments_count }}</td>
+                                    <td>{{ $author->favorite_posts_count }}</td>
+                                
                                 </tr>
+                                @endforeach
 
-                              
                             </tbody>
                         </table>
                     </div>

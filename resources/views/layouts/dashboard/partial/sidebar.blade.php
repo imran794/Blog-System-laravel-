@@ -112,7 +112,7 @@
 
              @if (Request::is('author*'))
              <li class="{{ Request::is('author/dashboard') ? 'active' : '' }}">
-                 <a href="index.html">
+                  <a href="{{ url('author/dashboard') }}">
                      <i class="material-icons">dashboard</i>
                      <span>Dashboard</span>
                  </a>
