@@ -1,5 +1,9 @@
 @extends('layouts.frontend.app')
 
+@php
+$categories = App\Models\Category::latest()->get();
+@endphp
+
 @section('title','Login')
 
 @push('css')

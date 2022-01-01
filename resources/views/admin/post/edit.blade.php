@@ -19,7 +19,7 @@
                 <div class="card">
                     <div class="header">
                         <h2>
-                            Add New Post
+                            Update Post
                         </h2>
                     </div>
                     <div class="body">
@@ -85,7 +85,7 @@
                         </div>
 
                         <a class="btn btn-danger m-t-15 waves-effect" href="{{ route('admin.post.index') }}">BACK</a>
-                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">SUBMIT</button>
+                        <button type="submit" class="btn btn-primary m-t-15 waves-effect">UPDATE</button>
 
                     </div>
                 </div>

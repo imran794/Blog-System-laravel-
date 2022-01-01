@@ -52,7 +52,7 @@ class CategoryController extends Controller
 
 
         $image = $request->file('image');
-        $slug  =  $slug = Str::lower($request->name);
+        $slug  =  $slug = Str::slug($request->name);
          
           if (isset($image))
         {

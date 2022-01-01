@@ -9,7 +9,7 @@
     .slider {
     height: 400px;
     width: 100%;
-    background-image: url({{ Storage::disk('public')->url('category/'.$category->image) }});
+  
     background-size: cover;
 }
 
@@ -20,7 +20,7 @@
 @endpush
 
 @section('content')
-    <div class="slider display-table center-text">
+    <div class="slider display-table center-text" style="background-image: url({{ Storage::disk('public')->url('category/'.$category->image) }});">
         <h1 class="title display-table-cell"><b>{{ $category->name }}</b></h1>
     </div><!-- slider -->
 

@@ -48,7 +48,7 @@ class TagController extends Controller
 
         Tag::insert([
             'name'        => $request->name,
-            'slug'         => Str::lower($request->name),
+            'slug'         => Str::slug($request->name),
             'created_at'  => Carbon::now()
         ]);
 

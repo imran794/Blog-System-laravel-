@@ -82,10 +82,11 @@
                             </ul>
 
                             <ul class="icons">
-                                <li>SHARE : </li>
+                            <div class="sharethis-inline-share-buttons"></div>
+                                <!-- <li>SHARE : </li>
                                 <li><a href="#"><i class="ion-social-facebook"></i></a></li>
                                 <li><a href="#"><i class="ion-social-twitter"></i></a></li>
-                                <li><a href="#"><i class="ion-social-pinterest"></i></a></li>
+                                <li><a href="#"><i class="ion-social-pinterest"></i></a></li> -->
                             </ul>
                         </div>
 
@@ -132,9 +133,9 @@
                         <div class="card h-100">
                             <div class="single-post post-style-1">
 
-                                <div class="blog-image"><img src="{{ asset(Storage::disk('public')->url('post/'.$post->image)) }} " alt="{{ $post->image }}"></div>
+                                <div class="blog-image"><img src="{{ Storage::disk('public')->url('post/'.$post->image) }}" alt="{{ $post->image }}"></div>
 
-                                <a class="avatar" href=""><img src="{{ asset(Storage::disk('public')->url('profile/'.$post->user->image)) }}" alt="Profile Image"></a>
+                                <a class="avatar" href=""><img src="{{ Storage::disk('public')->url('profile/'.$post->user->image) }}" alt="Profile Image"></a>
 
                                 <div class="blog-info">
 
@@ -248,5 +249,8 @@
 @endsection
 
 @push('js')
+
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=61d0a374cd90e100193ccf05&product=inline-share-buttons" async="async"></script>
+<script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=614ebd9fb1633800191baed2&product=inline-share-buttons' async='async'></script>
 
 @endpush

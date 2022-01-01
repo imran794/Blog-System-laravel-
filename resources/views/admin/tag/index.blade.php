@@ -41,8 +41,9 @@
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <th>ID</th>
+                                     <th>ID</th>
                                     <th>Name</th>
+                                    <th>Slug</th>
                                     <th>Post Count</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>

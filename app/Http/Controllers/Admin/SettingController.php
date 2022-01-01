@@ -30,7 +30,7 @@ class SettingController extends Controller
         ]);
 
         $image = $request->file('image');
-        $slug = Str::lower($request->name);
+        $slug = Str::slug($request->name);
         $user = User::findOrFail(Auth::id());
 
         if (isset($image)) {

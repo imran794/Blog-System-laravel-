@@ -25,10 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('welcome',[
-            'categories' => Category::latest()->get(),
-            'posts' => Post::where('is_approve',true)->where('status',true)->latest()->take(7)->get(),
-        ]);
+        $categories = Category::latest()->get();
+        $posts = Post::where('is_approve',true)->where('status',true)->latest()->take(9)->get();
+        return view('welcome',compact('categories','posts'));
     }
 
     public function Details($slug)
@@ -41,37 +40,42 @@ class HomeController extends Controller
             $post->increment('view_count');
             Session::put($blogkey,1);
         }
-
+        $categories = Category::latest()->get();
         $randomposts = Post::where('is_approve',true)->where('status',true)->take(3)->get();
-        return view('post_details',compact('post','randomposts'));
+        return view('post_details',compact('post','randomposts','categories'));
     }
 
     public function AllPost()
     {
         return view('posts',[
-            'posts' => Post::latest()->paginate(3)
+            'posts' => Post::where('is_approve',true)->latest()->paginate(6),
+            'categories' => Category::latest()->get()
+            
         ]);
     }
 
     public function CategoryByPost($slug)
     {
         $category = Category::where('slug',$slug)->first();
-        $posts = $category->posts()->where('is_approve',true)->where('status',true)->get();
-        return view('categorybypost', compact('category','posts'));
+        $categories = Category::latest()->get();
+        $posts = $category->posts()->where('is_approve',true)->get();
+        return view('categorybypost', compact('category','posts','categories'));
         
     }
 
     public function TagByPost($slug)
     {
         $tag = Tag::where('slug',$slug)->first();
-        $posts = $tag->posts()->where('is_approve',true)->where('status',true)->get();
-        return view('tagbypost',compact('tag','posts'));
+        $categories = Category::latest()->get();
+        $posts = $tag->posts()->where('is_approve',true)->get();
+        return view('tagbypost',compact('tag','posts','categories'));
     }
 
     public function AuthorProfile($username)
     {    
          $author = User::where('username',$username)->first();
+         $categories = Category::latest()->get();
          $posts = $author->posts()->where('is_approve',true)->where('status',true)->get();
-       return view('authprofile',compact('author','posts'));
+       return view('authprofile',compact('author','posts','categories'));
     }
 }

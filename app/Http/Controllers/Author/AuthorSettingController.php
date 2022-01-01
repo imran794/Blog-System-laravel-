@@ -33,7 +33,7 @@ class AuthorSettingController extends Controller
         ]);
 
         $image = $request->file('image');
-        $slug  =  $slug = Str::lower($request->name);
+        $slug  =  $slug = Str::slug($request->name);
         $user = User::findOrFail(Auth::id());
 
         if (isset($image)) {

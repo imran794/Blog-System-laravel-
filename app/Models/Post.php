@@ -12,7 +12,7 @@ class Post extends Model
 
     public function user()
     {
-       return  $this->belongsTo('App\Models\user');
+       return  $this->belongsTo('App\Models\User');
     }
 
     public function categories()
